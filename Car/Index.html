@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Car Rental Management</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            margin: 30px;
+        }
+
+        input, select, button {
+            padding: 8px;
+            margin: 5px;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid black;
+            padding: 10px;
+            text-align: left;
+        }
+    </style>
+</head>
+
+<!-- showCars körs när sidan öppnas -->
+<body onload="showCars()">
+
+    <h1>Car Rental Management</h1>
+
+    <!-- Formulär för att lägga till en bil -->
+    <h2>Add Car</h2>
+
+    <form id="carForm" onsubmit="addCar(event)">
+        <input type="text" id="id" placeholder="Car ID" required>
+        <input type="text" id="name" placeholder="Car Name" required>
+        <input type="text" id="model" placeholder="Model" required>
+        <input type="number" id="year" placeholder="Year" required>
+        <input type="number" id="rent" placeholder="Rent Per Day" required>
+
+        <select id="status">
+            <option value="Available">Available</option>
+            <option value="Rented">Rented</option>
+        </select>
+
+        <button type="submit">Add Car</button>
+    </form>
+
+    <!-- Sök efter en bil med dess Car ID -->
+    <h2>Search Car</h2>
+
+    <input type="text" id="searchId" placeholder="Enter Car ID">
+    <button onclick="searchCar()">Search</button>
+    <p id="message"></p>
+
+    <!-- Tabell som visar alla bilar -->
+    <h2>All Cars</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Car ID</th>
+                <th>Car Name</th>
+                <th>Model</th>
+                <th>Year</th>
+                <th>Rent Per Day</th>
+                <th>Status</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+
+        <tbody id="cars"></tbody>
+    </table>
+
+    <script>
+        // Adressen till JSON Server
+        const url = "http://localhost:3000/car";
+
+        // GET - Hämtar och visar alla bilar
+        function showCars() {
+
+            // Hämtar information från JSON Server
+            fetch(url)
+            .then(function(response) {
+                return response.json();
+            })
+            .then(function(cars) {
+
+                // Här sparas HTML-koden för tabellen
+                let table = "";
+
+                // Går igenom alla bilar i listan
+                for (let i = 0; i < cars.length; i++) {
+                    table += "<tr>";
+                    table += "<td>" + cars[i].carId + "</td>";
+                    table += "<td>" + cars[i].name + "</td>";
+                    table += "<td>" + cars[i].model + "</td>";
+                    table += "<td>" + cars[i].year + "</td>";
+                    table += "<td>" + cars[i].rent + "</td>";
+                    table += "<td>" + cars[i].status + "</td>";
+
+                    // Knappen använder JSON Servers interna ID
+                    table += "<td><button onclick=\"deleteCar('" + cars[i].id + "')\">Delete</button></td>";
+
+                    table += "</tr>";
+                }
+
+                // Lägger in alla bilar i tabellen
+                document.getElementById("cars").innerHTML = table;
+            })
+            .catch(function(error) {
+                // Skriver ut ett fel i konsolen
+                console.log("Error:", error);
+            });
+        }
+
+        // POST - Lägger till en ny bil
+        function addCar(event) {
+
+            // Hindrar sidan från att laddas om
+            event.preventDefault();
+
+            // Hämtar information från formuläret
+            let car = {
+                carId: document.getElementById("id").value,
+                name: document.getElementById("name").value,
+                model: document.getElementById("model").value,
+                year: document.getElementById("year").value,
+                rent: document.getElementById("rent").value,
+                status: document.getElementById("status").value
+            };
+
+            // Skickar den nya bilen till JSON Server
+            fetch(url, {
+                method: "POST",
+
+                // Anger att informationen skickas som JSON
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                // Gör om bilens information till JSON-text
+                body: JSON.stringify(car)
+            })
+            .then(function(response) {
+                return response.json();
+            })
+            .then(function(data) {
+
+                // Tömmer formuläret
+                document.getElementById("carForm").reset();
+
+                // Uppdaterar tabellen
+                showCars();
+            })
+            .catch(function(error) {
+                console.log("Error:", error);
+            });
+        }
+
+        // GET - Söker efter en bil
+        function searchCar() {
+
+            // Hämtar alla bilar från JSON Server
+            fetch(url)
+            .then(function(response) {
+                return response.json();
+            })
+            .then(function(cars) {
+
+                // Hämtar ID:t som användaren söker efter
+                let id = document.getElementById("searchId").value;
+                let found = false;
+
+                // Går igenom alla bilar
+                for (let i = 0; i < cars.length; i++) {
+
+                    // Kontrollerar om bilens ID matchar sökningen
+                    if (cars[i].carId == id) {
+
+                        // Visar information om bilen
+                        document.getElementById("message").innerText =
+                            "Car ID: " + cars[i].carId +
+                            ", Name: " + cars[i].name +
+                            ", Model: " + cars[i].model +
+                            ", Year: " + cars[i].year +
+                            ", Rent: " + cars[i].rent +
+                            ", Status: " + cars[i].status;
+
+                        found = true;
+                    }
+                }
+
+                // Visas om ingen bil hittades
+                if (found == false) {
+                    document.getElementById("message").innerText = "Car not found";
+                }
+            })
+            .catch(function(error) {
+                console.log("Error:", error);
+            });
+        }
+
+        // DELETE - Tar bort en bil
+        function deleteCar(id) {
+
+            // Skickar en DELETE-förfrågan med bilens interna ID
+            fetch(url + "/" + id, {
+                method: "DELETE"
+            })
+            .then(function(response) {
+
+                // Uppdaterar tabellen efter borttagningen
+                showCars();
+            })
+            .catch(function(error) {
+                console.log("Error:", error);
+            });
+        }
+    </script>
+
+</body>
+</html>

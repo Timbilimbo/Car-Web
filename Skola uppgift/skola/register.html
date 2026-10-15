@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Registrera</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <nav>
+    <h2>LBS</h2>
+
+    <div class="nav-links">
+        <a href="index.html">Startsida</a>
+        <a href="form.html">Formulär</a>
+        <a href="login.html">Logga in</a>
+        <a href="register.html">Registrera</a>
+    </div>
+</nav>
+
+    <div class="container">
+
+        <h1>Registrera dig</h1>
+
+        <form>
+
+            <label>Användarnamn:</label><br>
+            <input type="text" name="username"><br><br>
+
+            <label>E-postadress:</label><br>
+            <input type="email" name="email"><br><br>
+
+            <label>Lösenord:</label><br>
+            <input type="password" name="password"><br><br>
+
+            <label>Bekräfta lösenord:</label><br>
+            <input type="password" name="confirm-password"><br><br>
+
+            <input type="submit" value="Registrera" onclick="alertLogin()" onclick="validatePassword()">
+            <input type="reset" value="Återställ">
+
+        </form>
+
+        <p>
+            Har du redan ett konto?
+            <a href="login.html">Logga in</a>
+        </p>
+
+        <a href="index.html">Tillbaka till startsidan</a>
+
+    </div>
+    ```html
+<script>
+
+function alertLogin(){
+
+    let användarnamn = document.getElementsByName("username")[0].value;
+    let epostadress = document.getElementsByName("email")[0].value;
+    let lösenord = document.getElementsByName("password")[0].value;
+    let confirmLösenord = document.getElementsByName("confirm-password")[0].value;
+
+   function correctPassword(password, confirmPassword) {
+            if (password !== confirmPassword) {
+                alert("Lösenorden matchar inte. Vänligen försök igen.");
+                return false;
+            }
+            return true;
+        }
+
+        if (!correctPassword(lösenord, confirmLösenord)) {
+            return;
+        }
+
+        function ValidatePassword()
+        {
+           if(password.length < 8)
+           {
+              alert("Lösenordet måste vara minst 8 tecken långt.");
+              return false;
+           }
+        }
+        
+    
+
+    alert(
+        "användarnamn: " + användarnamn + "\n" +
+        "epostadress: " + epostadress + "\n" +
+        "lösenord: " + lösenord
+    );
+
+}
+
+
+
+
+</script>
+```
+
+
+
+
+
+<script src="java.js"></script>
+</body>
+</html>

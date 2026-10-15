@@ -4,10 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <img style="width: 20%; height: 10%; " src=https://lbs.se/wp-content/uploads/2025/06/lbslogotyprgbvit-1.svg>
     <h1 style="text-align: center;">LBS Växjö</h1>
+    <nav>
+    <h2>LBS</h2>
+
+    <div class="nav-links">
+        <a href="index.html">Startsida</a>
+        <a href="form.html">Formulär</a>
+        <a href="login.html">Logga in</a>
+        <a href="register.html">Registrera</a>
+    </div>
+</nav>
 
     <hr>
 
@@ -46,17 +57,27 @@
     <div style="text-align: center; padding: 10px;">
 
         <a style="text-align: center;" href="form.html">
-    <button>
+    <button script type="button" onclick="alertMessage()">
         Gå till formulär
     </button>
 
-</a>
+   
+
+     <script type="text/javascript">
+
+        function alertMessage(){
+            let alertMessage = "Du har klickat på knappen!";
+            alert(alertMessage);
+            
+        }
+     </script>"
+
 
     </div>
+</nav>
 
-
-
-
+<script src="java.js"></script>
 
 </body>
+
 </html>

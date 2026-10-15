@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Employees</title>
+
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border: 1px solid black;
+            padding: 10px;
+        }
+
+        input {
+            padding: 8px;
+            margin: 5px;
+        }
+    </style>
+</head>
+
+<body>
+
+<h1>Employee Information</h1>
+
+<table id="userTable">
+    <tr>
+        <th>EMP ID</th>
+        <th>EMP Name</th>
+        <th>EMP Job</th>
+        <th>EMP Salary</th>
+    </tr>
+</table>
+
+<h2>Add Employee</h2>
+
+<input id="empno" placeholder="EMP ID">
+<input id="empname" placeholder="EMP Name">
+<input id="job" placeholder="EMP Job">
+<input id="salary" placeholder="EMP Salary">
+
+<button onclick="addEmployee()">Save Employee</button>
+
+<script>
+
+async function viewData() {
+
+    let response = await fetch("/posts");
+    let data = await response.json();
+
+    let table = document.getElementById("userTable");
+
+    for (let employee of data) {
+
+        let row = table.insertRow();
+
+        row.insertCell(0).innerHTML = employee.empno;
+        row.insertCell(1).innerHTML = employee.empname;
+        row.insertCell(2).innerHTML = employee.job;
+        row.insertCell(3).innerHTML = employee.salary;
+    }
+}
+
+async function addEmployee() {
+
+    let employee = {
+        empno: empno.value,
+        empname: empname.value,
+        job: job.value,
+        salary: salary.value
+    };
+
+    await fetch("/add", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(employee)
+    });
+
+    location.reload();
+}
+
+viewData();
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Logga in</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <nav>
+    <h2>LBS</h2>
+
+    <div class="nav-links">
+        <a href="index.html">Startsida</a>
+        <a href="form.html">Formulär</a>
+        <a href="login.html">Logga in</a>
+        <a href="register.html">Registrera</a>
+    </div>
+</nav>
+
+    <div class="container">
+
+        <h1>Logga in</h1>
+
+        <form name="loginForm" method="post" action="welcomePage.html   " onsubmit="return userCheck()">
+
+            <label>Användarnamn:</label><br>
+            <input type="text" name="username"><br><br>
+
+            <label>Lösenord:</label><br>
+            <input type="password" name="password"><br><br>
+
+            <input type="submit" value="Logga in">
+            <input type="reset" value="Återställ">
+
+        </form>
+
+        <p id="error-message">
+
+            Har du inget konto?
+            <a href="register.html">Registrera dig</a>
+        </p>
+
+        <a href="index.html">Tillbaka till startsidan</a>
+
+    </div>
+    <
+<script type="text/javascript">
+    function userCheck(){
+        
+        let användarnamn = loginForm.username.value;
+        let lösenord = loginForm.password.value;
+
+        if (användarnamn === "admin" && lösenord === "admin123") {
+            return true;
+
+        } else {
+            document.getElementById("error-message").innerHTML = "Fel användarnamn eller lösenord";
+            return false;
+        }
+    }
+
+
+</script>
+
+
+</body>
+</html>

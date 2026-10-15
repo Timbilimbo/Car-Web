@@ -1,0 +1,32 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <select name="frmname" onchange="dropdown()">
+        <option value="1">city</option>
+        <option value="dc">Sweden</option>
+        <option value="cc">Denmark</option>
+        <option value="Bt">Finland</option>
+    </select>
+
+    <script type="text/javascript">
+        function dropdown(){
+            let coval=frmname.value;
+            if (coval=="dc")
+            document.getElementById("res").innerHTML = "Du har valt Sweden ";
+
+            if (coval=="cc")
+            document.getElementById("res").innerHTML = "Du har valt Denmark ";
+
+            if (coval=="Bt")
+            document.getElementById("res").innerHTML = "Du har valt Finland ";
+        
+        </script>
+        
+        }
+</body>
+</html>

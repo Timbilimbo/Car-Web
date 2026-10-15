@@ -1,0 +1,32 @@
+{
+  "car": [
+    {
+      "carId": "1",
+      "name": "Volvo",
+      "model": "V60",
+      "year": "2022",
+      "rent": "500",
+      "status": "Available",
+      "id": "2hwpF_9JhHQ"
+    },
+    {
+      "carId": "3",
+      "name": "Audi",
+      "model": "Audi-Quattro",
+      "year": "2027",
+      "rent": "999",
+      "status": "Rented",
+      "id": "sRhXvnkvzUM"
+    },
+    {
+      "carId": "67",
+      "name": "Egon Opel Astra grå",
+      "model": "Opel Astra",
+      "year": "2067",
+      "rent": "670",
+      "status": "Rented",
+      "id": "dNzPk7zhDNA"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}
